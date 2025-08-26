@@ -72,9 +72,10 @@ const savePage = async () => {
 
         <UButton @click="savePage" class="mt-3">💾 Save</UButton>
     </div> 
-
     <div>
-      Component
+      <div class="p-4">
+        Preview
+      </div>
     </div>
   </div>
 </template>
