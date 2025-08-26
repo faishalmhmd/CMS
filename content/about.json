@@ -1,0 +1,18 @@
+{
+  "id": "content/about.json",
+  "title": "Asd",
+  "body": "Ini halaman tentang kami.",
+  "description": null,
+  "extension": "json",
+  "meta": {
+    "__hash__": "8EVnYp3tqpyl5zuZ93KkQz3Xb6lHarcfEKrONbuYfJM"
+  },
+  "navigation": true,
+  "path": "/about",
+  "seo": {
+    "title": "About Page",
+    "description": null
+  },
+  "stem": "about",
+  "__hash__": "UKI4v6o8BJgdMWhTHMAFTL811168eeHC3AoRyQoGAcM"
+}

@@ -1,0 +1,18 @@
+{
+  "id": "content/index.json",
+  "title": "Apa coba",
+  "body": "Selamat datang di halaman utama.",
+  "description": null,
+  "extension": "json",
+  "meta": {
+    "__hash__": "vFhYYK8VrGn6I3gwOrxJWjc9nE77fTdU_3YLY0MGPXY"
+  },
+  "navigation": true,
+  "path": "/",
+  "seo": {
+    "title": "Home Page",
+    "description": null
+  },
+  "stem": "index",
+  "__hash__": "9P726-H1pLTCEdZSdk6wXJaxcaGfJVtrlYjauTwLTFc"
+}
