@@ -63,18 +63,46 @@ const savePage = async () => {
           Main Content of {{ selectedPages }}
         </div>
         <div v-if="pageDetail">
-          <UInput v-model="pageDetail.title" placeholder="Edit title..." />
-          <p>{{ pageDetail.body }}</p>
+          <div class="flex flex-col my-4">
+            <label for="title" class="font-medium">Title</label>
+            <UInput id="title" v-model="pageDetail.title" placeholder="Edit title..." />
+          </div>
+          <div class="flex flex-col my-4">
+            <label for="title" class="font-medium">Body</label>
+            <UInput id="title" v-model="pageDetail.body" placeholder="Edit title..." />
+          </div>
+          <div class="">
+            <div v-for="items in pageDetail.meta.data.qa">
+              {{ items }}
+            </div>
+          </div>
         </div>
+
+
         <div v-else>
           <p>No page selected or page not found.</p>
         </div>
 
         <UButton @click="savePage" class="mt-3">💾 Save</UButton>
     </div> 
-    <div>
+    <div class="border-l border-gray-100">
       <div class="p-4">
-        Preview
+        <div v-if="pageDetail">
+          <div class="flex flex-col my-4">
+            <div class="font-bold">
+              {{ pageDetail.title }}
+            </div>
+            <div class="">
+              {{ pageDetail.body }}
+            </div>
+            <div class="">
+              <UAccordion :items="pageDetail.meta.data.qa.map(q => ({ label: q.q, content: q.a }))" />
+            </div>
+          </div>
+        </div>
+        <div v-else>
+          <p>No page selected or page not found.</p>
+        </div>
       </div>
     </div>
   </div>

@@ -2,6 +2,52 @@
   "id": "content/index.json",
   "title": "Apa coba",
   "body": "Selamat datang di halaman utama.",
+   "data": {
+    "qa": [
+      {
+        "id": 1,
+        "q": "Apa itu UMKM?",
+        "a": "UMKM adalah Usaha Mikro, Kecil, dan Menengah yang berperan penting dalam perekonomian Indonesia."
+      },
+      {
+        "id":2,
+        "q": "Bagaimana cara mendaftar UMKM?",
+        "a": "Pendaftaran UMKM bisa dilakukan melalui OSS (Online Single Submission) atau melalui dinas terkait di daerah."
+      },
+      {
+        "id": 3,
+        "q": "Apakah UMKM bisa mendapatkan bantuan modal?",
+        "a": "Ya, pemerintah menyediakan berbagai program bantuan dan pembiayaan untuk pelaku UMKM."
+      }
+    ],
+    "produk": [
+      {
+        "nama": "Keripik Pisang",
+        "kategori": "Makanan Ringan",
+        "harga": 15000
+      },
+      {
+        "nama": "Tas Rajut Handmade",
+        "kategori": "Kerajinan",
+        "harga": 75000
+      }
+    ],
+    "layanan": [
+      {
+        "nama": "Konsultasi Bisnis",
+        "deskripsi": "Layanan konsultasi untuk pengembangan usaha kecil dan menengah."
+      },
+      {
+        "nama": "Pelatihan Digital Marketing",
+        "deskripsi": "Workshop untuk membantu UMKM memasarkan produk secara online."
+      }
+    ],
+    "kontak": {
+      "telepon": "+62 812 3456 7890",
+      "email": "info@umkmnesia.id",
+      "alamat": "Jl. Inovasi No. 123, Jakarta"
+    }
+  },
   "description": null,
   "extension": "json",
   "meta": {

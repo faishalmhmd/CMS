@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vue Drag & Resize Grid</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Vue 3 -->
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+  <!-- SortableJS -->
+  <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+</head>
+<body class="bg-gray-100 p-6">
+
+<div id="app">
+  <h1 class="text-2xl font-bold mb-4">Drag & Resize Grid (max {{ cols }} cols)</h1>
+
+  <!-- Grid container -->
+  <div ref="grid"
+       class="grid gap-1 [grid-template-columns:repeat(48,minmax(0,1fr))] bg-gray-200 p-1 rounded">
+
+    <!-- Render slot by slot -->
+    <template v-for="col in cols" :key="col">
+      <!-- Jika ada item mulai di col ini -->
+      <div v-if="itemAt(col)"
+           class="relative bg-white shadow rounded p-2 flex flex-col justify-between cursor-move border select-none"
+           :style="`grid-column: span ${itemAt(col).width} / span ${itemAt(col).width}`">
+
+        <div class="font-medium">Item {{ itemAt(col).id }} ({{ itemAt(col).width }})</div>
+
+        <!-- Resize handle -->
+        <div class="absolute top-0 right-0 h-full w-2 bg-blue-400/20 hover:bg-blue-400/40 cursor-ew-resize"
+             @mousedown="startResize($event, itemAt(col).index)">
+        </div>
+      </div>
+
+      <!-- Jika kosong -->
+      <div v-else class="bg-gray-300/40 border border-dashed border-gray-400 rounded"></div>
+    </template>
+  </div>
+</div>
+
+<script>
+const { createApp, ref, computed, onMounted } = Vue
+
+createApp({
+  setup() {
+    const cols = 48
+    const items = ref([
+      { id: 1, start: 1, width: 12 },
+      { id: 2, start: 13, width: 16 },
+      { id: 3, start: 29, width: 8 },
+    ])
+
+    const grid = ref(null)
+    let resizingIndex = null
+    let startX = 0
+    let startWidth = 0
+
+    // helper: cari apakah di col ini ada item yang start di situ
+    const itemAt = (col) => {
+      for (let i = 0; i < items.value.length; i++) {
+        if (items.value[i].start === col) {
+          return { ...items.value[i], index: i }
+        }
+      }
+      return null
+    }
+
+    onMounted(() => {
+      new Sortable(grid.value, {
+        animation: 150,
+        ghostClass: 'opacity-50',
+        draggable: ".bg-white", // hanya item
+        onEnd(evt) {
+          const movedItem = items.value.splice(evt.oldIndex, 1)[0]
+          items.value.splice(evt.newIndex, 0, movedItem)
+        }
+      })
+
+      window.addEventListener("mousemove", onMouseMove)
+      window.addEventListener("mouseup", onMouseUp)
+    })
+
+    function startResize(e, index) {
+      e.preventDefault()
+      resizingIndex = index
+      startX = e.clientX
+      startWidth = items.value[index].width
+    }
+
+    function onMouseMove(e) {
+      if (resizingIndex === null) return
+
+      const gridRect = grid.value.getBoundingClientRect()
+      const cellWidth = gridRect.width / cols
+
+      const deltaX = e.clientX - startX
+      const deltaCols = Math.round(deltaX / cellWidth)
+
+      let newWidth = startWidth + deltaCols
+      if (newWidth < 1) newWidth = 1
+      if (items.value[resizingIndex].start + newWidth - 1 > cols) {
+        newWidth = cols - items.value[resizingIndex].start + 1
+      }
+
+      items.value[resizingIndex].width = newWidth
+    }
+
+    function onMouseUp() {
+      resizingIndex = null
+    }
+
+    return { items, grid, cols, itemAt, startResize }
+  }
+}).mount("#app")
+</script>
+
+</body>
+</html>
