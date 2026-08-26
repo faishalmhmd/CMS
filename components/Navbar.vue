@@ -8,7 +8,6 @@
       <UNavigationMenu :items="menuItems" class="hidden sm:flex" />
 
       <div class="flex items-center gap-2">
-        <UColorModeButton />
         <UButton
           class="sm:hidden"
           icon="i-lucide-menu"
