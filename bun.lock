@@ -1,5 +1,6 @@
 {
   "lockfileVersion": 1,
+  "configVersion": 0,
   "workspaces": {
     "": {
       "name": "nuxt-app",
@@ -13,6 +14,9 @@
         "vue": "^3.5.18",
         "vue-router": "^4.5.1",
         "vuedraggable": "^2.24.3",
+      },
+      "devDependencies": {
+        "@iconify-json/lucide": "1.2.124",
       },
     },
   },
@@ -158,6 +162,8 @@
     "@floating-ui/utils": ["@floating-ui/utils@0.2.10", "", {}, "sha512-aGTxbpbg8/b5JfU1HXSrbH3wXZuLPJcNEcZQFMxLs3oSzgtVu6nFPkbbGGUvBcUjKV2YyB9Wxxabo+HEH9tcRQ=="],
 
     "@floating-ui/vue": ["@floating-ui/vue@1.1.9", "", { "dependencies": { "@floating-ui/dom": "^1.7.4", "@floating-ui/utils": "^0.2.10", "vue-demi": ">=0.13.0" } }, "sha512-BfNqNW6KA83Nexspgb9DZuz578R7HT8MZw1CfK9I6Ah4QReNWEJsXWHN+SdmOVLNGmTPDi+fDT535Df5PzMLbQ=="],
+
+    "@iconify-json/lucide": ["@iconify-json/lucide@1.2.124", "", { "dependencies": { "@iconify/types": "*" } }, "sha512-mO6JyBVNER7uXEkW2bXiN9Rrm6w91IXxwnNmIMbu2KZX0ZPcVZH1xDUTw94pryxESUIpBhinkOUIZIav+TA9ng=="],
 
     "@iconify/collections": ["@iconify/collections@1.0.587", "", { "dependencies": { "@iconify/types": "*" } }, "sha512-N4Fq9AoeyCz2TDsdepWqiQo2fSdf43iyQHhzWppz0nTOoXRg34BzJVR3XSSx7XGTenfydLCqwNjisVbFIYGBJg=="],
 

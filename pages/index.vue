@@ -1,27 +1,59 @@
 <script setup lang="ts">
+import type { IQA, IProduk, ILayanan, IKontak } from '~/types/data.interface'
+
 const { data: home } = await useAsyncData(() => queryCollection('content').path('/').first())
 
 useSeoMeta({
   title: home.value?.title,
   description: home.value?.description
 })
+
+const content = computed(() => home.value?.meta?.data as {
+  qa?: IQA[]
+  produk?: IProduk[]
+  layanan?: ILayanan[]
+  kontak?: IKontak
+} | undefined)
 </script>
 
 <template>
-  <div>
-    <h1>Raw Content Data</h1>
-    <pre>{{ home }}</pre> <!-- tampilkan semua object -->
-  </div>
-
   <div v-if="home">
-    <h2>Title:</h2>
-    <p>{{ home.title }}</p>
+    <Hero :title="home.title" :subtitle="home.body" badge="UMKM" />
 
-    <h2>Body:</h2>
-    <div v-html="home.body"></div> <!-- kalau Markdown sudah di-render jadi HTML -->
+    <ProductList
+      v-if="content?.produk?.length"
+      :items="content.produk"
+      title="Produk Unggulan"
+      description="Pilihan produk dari pelaku UMKM."
+    />
+
+    <ServiceList
+      v-if="content?.layanan?.length"
+      :items="content.layanan"
+      title="Layanan Kami"
+      description="Dukungan untuk mengembangkan usaha Anda."
+    />
+
+    <FaqSection
+      v-if="content?.qa?.length"
+      :items="content.qa"
+      title="Pertanyaan Umum"
+    />
+
+    <ContactCard
+      v-if="content?.kontak"
+      :contact="content.kontak"
+      title="Hubungi Kami"
+    />
   </div>
 
-  <div v-else class="bg-red-500 p-4">
-    Home not found
-  </div>
+  <UContainer v-else class="py-12">
+    <UAlert
+      title="Home not found"
+      description="Konten untuk halaman ini belum tersedia."
+      color="error"
+      variant="subtle"
+      icon="i-lucide-triangle-alert"
+    />
+  </UContainer>
 </template>

@@ -1,27 +1,31 @@
 <script setup lang="ts">
-const { data: home } = await useAsyncData(() => queryCollection('content').path('/about').first())
+const { data: about } = await useAsyncData(() => queryCollection('content').path('/about').first())
 
 useSeoMeta({
-  title: home.value?.title,
-  description: home.value?.description
+  title: about.value?.title,
+  description: about.value?.description
 })
 </script>
 
 <template>
-  <div>
-    <h1>Raw Content Data</h1>
-    <pre>{{ home }}</pre> <!-- tampilkan semua object -->
-  </div>
+  <UContainer class="py-12 max-w-3xl">
+    <template v-if="about">
+      <SectionHeading :title="about.title" :description="about.description ?? undefined" />
 
-  <div v-if="home">
-    <h2>Title:</h2>
-    <p>{{ home.title }}</p>
+      <UCard>
+        <p class="text-muted">
+          {{ about.body }}
+        </p>
+      </UCard>
+    </template>
 
-    <h2>Body:</h2>
-    <div v-html="home.body"></div> <!-- kalau Markdown sudah di-render jadi HTML -->
-  </div>
-
-  <div v-else class="bg-red-500 p-4">
-    Home not found
-  </div>
+    <UAlert
+      v-else
+      title="About not found"
+      description="Konten untuk halaman ini belum tersedia."
+      color="error"
+      variant="subtle"
+      icon="i-lucide-triangle-alert"
+    />
+  </UContainer>
 </template>
