@@ -1,52 +1,64 @@
 <template>
-  <nav :class="['p-4', `bg-${bgColor} text-${textColor}`]">
-    <div class="container mx-auto flex justify-between items-center">
-      <div class="text-xl font-bold">{{ siteName }}</div>
-      <div class="space-x-6">
-        <a 
-          v-for="(item, index) in navItems" 
-          :key="index"
-          :href="item.url" 
-          class="hover:opacity-80 transition-opacity"
-          :class="{ 'font-bold': item.active }"
-        >
-          {{ item.text }}
-        </a>
+  <nav class="border-b border-default bg-default/75 backdrop-blur sticky top-0 z-50">
+    <UContainer class="flex items-center justify-between gap-4 py-3">
+      <NuxtLink to="/" class="text-lg font-bold text-highlighted">
+        {{ siteName }}
+      </NuxtLink>
+
+      <UNavigationMenu :items="menuItems" class="hidden sm:flex" />
+
+      <div class="flex items-center gap-2">
+        <UButton
+          class="sm:hidden"
+          icon="i-lucide-menu"
+          color="neutral"
+          variant="ghost"
+          aria-label="Open menu"
+          @click="open = true"
+        />
       </div>
-    </div>
+    </UContainer>
+
+    <USlideover v-model:open="open" title="Menu">
+      <template #body>
+        <UNavigationMenu :items="menuItems" orientation="vertical" />
+      </template>
+    </USlideover>
   </nav>
 </template>
 
 <script setup lang="ts">
+import type { NavigationMenuItem } from '@nuxt/ui'
+
 interface NavItem {
   text: string
   url: string
   active?: boolean
 }
 
-const props = defineProps({
-  siteName: {
-    type: String,
-    default: 'My Website'
-  },
-  bgColor: {
-    type: String,
-    default: 'blue-600'
-  },
-  textColor: {
-    type: String,
-    default: 'white'
-  },
-  items: {
-    type: Array as () => NavItem[],
-    default: () => [
-      { text: 'Home', url: '#', active: true },
-      { text: 'About', url: '#' },
-      { text: 'Services', url: '#' },
-      { text: 'Contact', url: '#' }
-    ]
-  }
+const props = withDefaults(defineProps<{
+  siteName?: string
+  items?: NavItem[]
+}>(), {
+  siteName: 'My Website',
+  items: () => [
+    { text: 'Home', url: '/' },
+    { text: 'About', url: '/about' },
+    { text: 'Admin', url: '/admin' }
+  ]
 })
 
-const navItems = ref<NavItem[]>(props.items)
+const open = ref(false)
+const route = useRoute()
+
+const menuItems = computed<NavigationMenuItem[]>(() =>
+  props.items.map(item => ({
+    label: item.text,
+    to: item.url,
+    active: item.active ?? route.path === item.url,
+    onSelect: () => {
+      open.value = false
+    }
+  }))
+)
 </script>

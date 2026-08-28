@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import type { IData } from '~/types/data.interface'
 
+definePageMeta({ layout: false })
+
 const selectedPages = ref('')
 
 const { data: pages } = await useAsyncData('pages', () =>
